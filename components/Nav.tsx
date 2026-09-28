@@ -9,6 +9,9 @@ export default function Nav() {
         </Link>
         <ul className="links">
           <li>
+            <Link href="/">Home</Link>
+          </li>
+          <li>
             <Link href="/conference">Conference</Link>
           </li>
           <li>
