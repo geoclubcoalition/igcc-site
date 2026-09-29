@@ -20,12 +20,21 @@ import { Club } from "./types";
  */
 export const clubs: Club[] = [
   {
-    id: "hale-geographic-society",
+    id: "3",
     name: "Hale Geographic Society",
     school: "Hale School",
     country: "Australia",
     lat: -31.9505,
     lng: 115.8605,
     blurb: "Founding club — Perth, Western Australia.",
+  },
+  {
+    id: "2",
+    name: "Spidola Geographical Society",
+    school: "Jelgava Spidola State Gymnasium",
+    country: "Latvia",
+    lat: 56.64581261691961,
+    lng: 23.70948334732631,
+    blurb: "Founding club — Jelgava, Latvia.",
   },
 ];

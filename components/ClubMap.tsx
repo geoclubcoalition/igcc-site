@@ -14,6 +14,8 @@ const OCEAN = "#0047AB";
 const BORDER = "#0A0A0A";
 const SPACE = "#FFD500";
 
+const HIDDEN_LABELS = ["RU", "BY"];
+
 const PIN_COLOURS = ["#E30613", "#0047AB", "#FFD500"];
 
 function pinColour(id: string): string {
@@ -48,6 +50,12 @@ function flattenStyle(map: import("mapbox-gl").Map) {
         map.setPaintProperty(layer.id, "text-halo-color", LAND);
         map.setPaintProperty(layer.id, "text-halo-width", 1.5);
         map.setPaintProperty(layer.id, "text-opacity", 1);
+                const existingFilter = layer.filter ?? true;
+        map.setFilter(layer.id, [
+          "all",
+          existingFilter,
+          ["!", ["in", ["get", "iso_3166_1"], ["literal", HIDDEN_LABELS]]],
+        ]);
       } else {
         map.setLayoutProperty(layer.id, "visibility", "none");
       }

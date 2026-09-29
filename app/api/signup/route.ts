@@ -23,6 +23,19 @@ const REQUIRED_FIELDS: (keyof SignupPayload)[] = [
   "about",
 ];
 
+function slugify(value: string): string {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "") || "club";
+}
+
+// Escapes a value for safe use inside a single- or double-quoted TS string.
+function jsString(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
+
 export async function POST(request: Request) {
   let payload: SignupPayload;
 
@@ -61,6 +74,18 @@ export async function POST(request: Request) {
 
   const { clubName, school, country, contactName, contactEmail, link, about } = payload;
 
+  const snippet = [
+    "  {",
+    `    id: "${slugify(clubName!)}",`,
+    `    name: "${jsString(clubName!)}",`,
+    `    school: "${jsString(school!)}",`,
+    `    country: "${jsString(country!)}",`,
+    "    lat: 0, // TODO: fill in from Google Maps",
+    "    lng: 0, // TODO: fill in from Google Maps",
+    `    blurb: "${jsString(about!.split("\n")[0].slice(0, 140))}",`,
+    "  },",
+  ].join("\n");
+
   try {
     const { error } = await resend.emails.send({
       from: `IGCC Signups <${fromEmail}>`,
@@ -76,6 +101,11 @@ export async function POST(request: Request) {
         "",
         "About the club:",
         about,
+        "",
+        "---",
+        "Paste into lib/clubs.ts (fill in lat/lng):",
+        "",
+        snippet,
       ]
         .filter(Boolean)
         .join("\n"),
