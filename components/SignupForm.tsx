@@ -97,7 +97,7 @@ export default function SignupForm() {
           id="about"
           name="about"
           required
-          placeholder="What does your club actually do? How many members? How long has it been running?"
+          placeholder="What is your club busy with? How many members do you have? What are your goals? How long has it been running?"
         />
       </div>
 

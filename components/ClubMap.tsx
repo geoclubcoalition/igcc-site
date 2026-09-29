@@ -9,6 +9,9 @@ const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN;
 const DEGREES_PER_SECOND = 4; // one full turn every 90 seconds
 const RESUME_DELAY_MS = 2000;
 
+const DEFAULT_CENTER: [number, number] = [115.86, 10];
+const DEFAULT_ZOOM = 1.4;
+
 const LAND = "#FFFFFF";
 const OCEAN = "#0047AB";
 const BORDER = "#0A0A0A";
@@ -86,8 +89,8 @@ export default function ClubMap({ clubs }: { clubs: Club[] }) {
         container: containerRef.current,
         style: "mapbox://styles/mapbox/light-v11",
         projection: "globe",
-        center: [115.86, 10],
-        zoom: 1.4,
+        center: DEFAULT_CENTER,
+        zoom: DEFAULT_ZOOM,
         scrollZoom: false,
         attributionControl: true,
       });
@@ -186,13 +189,59 @@ export default function ClubMap({ clubs }: { clubs: Club[] }) {
   if (!TOKEN) {
     return (
       <div className="map-fallback">
-        Map disabled — add NEXT_PUBLIC_MAPBOX_TOKEN to your environment to
-        show member clubs on a live map.
+        Map disabled. Please contact administration at geoclubcoalition@gmail.com to resolve.
       </div>
     );
   }
 
-  return <div ref={containerRef} style={{ height: "100%", width: "100%" }} />;
+    const holdTimer = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startZoom = (direction: 1 | -1) => {
+    const step = () => {
+      const map = mapRef.current;
+      if (!map) return;
+      map.setZoom(map.getZoom() + direction * 0.1);
+    };
+    step(); // fire immediately so a quick tap still zooms a real amount
+    holdTimer.current = setInterval(step, 30);
+  };
+
+  const stopZoom = () => {
+    if (holdTimer.current) {
+      clearInterval(holdTimer.current);
+      holdTimer.current = null;
+    }
+  };
+
+  return (
+    <div style={{ position: "relative", height: "100%", width: "100%" }}>
+      <div ref={containerRef} style={{ height: "100%", width: "100%" }} />
+      <div className="map-controls">
+        <button
+          type="button"
+          aria-label="Zoom in"
+          onMouseDown={() => startZoom(1)}
+          onMouseUp={stopZoom}
+          onMouseLeave={stopZoom}
+          onTouchStart={() => startZoom(1)}
+          onTouchEnd={stopZoom}
+        >
+          +
+        </button>
+        <button
+          type="button"
+          aria-label="Zoom out"
+          onMouseDown={() => startZoom(-1)}
+          onMouseUp={stopZoom}
+          onMouseLeave={stopZoom}
+          onTouchStart={() => startZoom(-1)}
+          onTouchEnd={stopZoom}
+        >
+          −
+        </button>
+      </div>
+    </div>
+  );
 }
 
 function escapeHtml(value: string): string {

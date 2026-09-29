@@ -44,7 +44,7 @@ export default function HomePage() {
             <Link href="/conference" className="btn btn--primary">
               See this year&apos;s conference
             </Link>
-            <Link href="/signup" className="btn" style={{ borderColor: borderColor }}>
+            <Link href="/signup" className="btn" style={{ borderColor: borderColor, backgroundColor: "#FFFFFF"}}>
               Sign up your club
             </Link>
           </div>
@@ -92,7 +92,6 @@ export default function HomePage() {
             <span className="n">{countries}</span>
             <span className="l">countr{countries === 1 ? "y" : "ies"}</span>
           </div>
-          <p className="section-label">Member clubs</p>
         </div>
         <ul className="club-list">
           {clubs.map((club) => (

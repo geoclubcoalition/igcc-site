@@ -117,7 +117,7 @@ export default function ConferencePage() {
               color: "#000000",
             }}
           >
-            Our annual conference brings together the international community of geography clubs to showcase our projects, ideas, and ambitions. Each club will have [A SET TIME] to present their response to the year&apos;s question, followed by questions and discussion. Whilst the goal is to share the projects and ideas that the world&apos;s geography clubs come up with, the most impressive presentation will be awarded with &quot;Geography Club of the Year&quot; by our panel of judges. [INCLUDE OR NOT??? MAYBE NEXT YEAR]
+            Our annual conference brings together the international community of geography clubs to showcase our projects, ideas, and ambitions. Each club will have 20 minutes to present their response to the year&apos;s question, followed by questions and discussion. Whilst the goal is to share the projects and ideas that the world&apos;s geography clubs come up with, the most impressive presentation will be awarded with &quot;Geography Club of the Year&quot; by our panel of judges.
           </p>
         </div>
       </div>
