@@ -6,5 +6,6 @@ export interface Club {
   lat: number;
   lng: number;
   blurb: string;
-  website?: string;
+  colour?: string;
+  about?: string;
 }

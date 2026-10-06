@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ClubMap from "@/components/ClubMap";
-import { clubs } from "@/lib/clubs";
+import ClubList from "@/components/ClubList";
+import {clubs} from "@/lib/clubs"
 
 export default function HomePage() {
   const countries = new Set(clubs.map((c) => c.country)).size;
@@ -93,17 +94,7 @@ export default function HomePage() {
             <span className="l">countr{countries === 1 ? "y" : "ies"}</span>
           </div>
         </div>
-        <ul className="club-list">
-          {clubs.map((club) => (
-            <li key={club.id}>
-              <span className="name">
-                {club.name}
-                <span style={{ fontWeight: 400 }}> — {club.school}</span>
-              </span>
-              <span className="place">{club.country}</span>
-            </li>
-          ))}
-        </ul>
+        <ClubList clubs={clubs} />
       </div>
 
       {/* CTA Footer Block */}

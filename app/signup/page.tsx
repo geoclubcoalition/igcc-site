@@ -10,6 +10,11 @@ export default function SignupPage() {
             Tell us about your club. We&apos;ll review it and follow up by
             email to confirm your spot at the next conference.
           </p>
+          <p style={{ marginTop: 16, fontSize: "0.9rem", opacity: 0.7 }}>
+            We only use these details to run the coalition and the
+            conference - to contact you about your club&apos;s signup and
+            to list your club once it&apos;s approved.
+          </p>
         </div>
       </div>
 

@@ -5,6 +5,7 @@ export default function Nav() {
     <nav className="site-nav">
       <div className="wrap">
         <Link href="/" className="mark">
+          <img src="/logo.svg" alt="" width={28} height={28} />
           International Geography Club Coalition
         </Link>
         <ul className="links">

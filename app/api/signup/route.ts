@@ -24,16 +24,23 @@ const REQUIRED_FIELDS: (keyof SignupPayload)[] = [
 ];
 
 function slugify(value: string): string {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "") || "club";
+  return (
+    value
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/^-+|-+$/g, "") || "club"
+  );
 }
 
-// Escapes a value for safe use inside a single- or double-quoted TS string.
+// Escapes a value for safe use inside a double-quoted TS string.
 function jsString(value: string): string {
   return value.replace(/\\/g, "\\\\").replace(/"/g, '\\"');
+}
+
+// Escapes a value for use inside a TS template literal (backtick string).
+function jsTemplate(value: string): string {
+  return value.replace(/\\/g, "\\\\").replace(/`/g, "\\`").replace(/\$\{/g, "\\${");
 }
 
 export async function POST(request: Request) {
@@ -74,6 +81,9 @@ export async function POST(request: Request) {
 
   const { clubName, school, country, contactName, contactEmail, link, about } = payload;
 
+  const shortBlurb = about!.split("\n")[0].slice(0, 140);
+  const fullAbout = about!.trim();
+
   const snippet = [
     "  {",
     `    id: "${slugify(clubName!)}",`,
@@ -82,7 +92,8 @@ export async function POST(request: Request) {
     `    country: "${jsString(country!)}",`,
     "    lat: 0, // TODO: fill in from Google Maps",
     "    lng: 0, // TODO: fill in from Google Maps",
-    `    blurb: "${jsString(about!.split("\n")[0].slice(0, 140))}",`,
+    `    blurb: "${jsString(shortBlurb)}",`,
+    "    about: `" + jsTemplate(fullAbout) + "`,",
     "  },",
   ].join("\n");
 

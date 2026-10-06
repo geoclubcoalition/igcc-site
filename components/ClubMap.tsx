@@ -19,13 +19,18 @@ const SPACE = "#FFD500";
 
 const HIDDEN_LABELS = ["RU", "BY"];
 
-const PIN_COLOURS = ["#E30613", "#0047AB", "#FFD500"];
+const PIN_COLOURS: Record<string, string> = {
+  red: "#E30613",
+  blue: "#0047AB",
+  yellow: "#FFD500",
+};
+const DEFAULT_PIN_COLOUR = PIN_COLOURS.red;
 
-function pinColour(id: string): string {
-  let h = 0;
-  for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
-  return PIN_COLOURS[h % PIN_COLOURS.length];
+function pinColour(colour: string | undefined): string {
+  if (!colour) return DEFAULT_PIN_COLOUR;
+  return PIN_COLOURS[colour] ?? DEFAULT_PIN_COLOUR;
 }
+
 
 function flattenStyle(map: import("mapbox-gl").Map) {
   const layers = map.getStyle()?.layers ?? [];
@@ -152,7 +157,7 @@ export default function ClubMap({ clubs }: { clubs: Club[] }) {
         const el = document.createElement("div");
         el.style.width = "16px";
         el.style.height = "16px";
-        el.style.background = pinColour(club.id);
+        el.style.background = pinColour(club.colour);
         el.style.border = "2px solid #0A0A0A";
         el.style.cursor = "pointer";
 

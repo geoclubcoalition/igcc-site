@@ -67,7 +67,6 @@ h3 {
 }
 
 p {
-  max-width: 62ch;
   margin: 0 0 1em;
 }
 
@@ -105,6 +104,9 @@ textarea:focus-visible {
 }
 
 .site-nav .mark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-family: var(--font-display);
   font-weight: 800;
   font-size: 1.1rem;
@@ -303,12 +305,54 @@ textarea:focus-visible {
   border-top: none;
 }
 
-.club-list li {
+.club-list__item {
+  border-top: var(--rule-thin) solid var(--color-black);
+}
+
+.club-list__row {
+  width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   gap: 16px;
   padding: 14px clamp(20px, 4vw, 32px);
-  border-top: var(--rule-thin) solid var(--color-black);
+  background: transparent;
+  border: none;
+  font: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.club-list__row:hover {
+  background: #f2f2f2;
+}
+
+.club-list__right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  white-space: nowrap;
+}
+
+.club-list .place {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+}
+
+.club-list__chevron {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.club-list__detail {
+  padding: 0 clamp(20px, 4vw, 32px) 18px;
+  border-top: 1px solid #ddd;
+  padding-top: 14px;
+  font-size: 0.95rem;
 }
 
 .club-list .name {
